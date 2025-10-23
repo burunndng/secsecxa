@@ -1,20 +1,32 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# CyberSec Toolkit
 
-# Run and deploy your AI Studio app
+This toolkit provides a collection of tools for cybersecurity analysis and research.
 
-This contains everything you need to run your app locally.
+## Local Development
 
-View your app in AI Studio: https://ai.studio/apps/drive/1RORZOJGwPK_TPEgXkSjpnwYpMoqOVHYz
+To run the application locally, you'll need to install the dependencies for both the frontend and backend.
 
-## Run Locally
+### Frontend
 
-**Prerequisites:**  Node.js
+1.  Navigate to the root directory.
+2.  Install dependencies: `npm install`
+3.  Run the development server: `npm run dev`
 
+### Backend
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1.  Navigate to the `backend` directory.
+2.  Install dependencies: `pip install -r requirements.txt`
+3.  Run the development server: `uvicorn main:app --reload`
+
+## Docker
+
+The application can be run using Docker and Docker Compose.
+
+1.  Build the images: `docker-compose build`
+2.  Start the services: `docker-compose up`
+
+The frontend will be available at `http://localhost:3000` and the backend at `http://localhost:8000`.
+
+## API Documentation
+
+The OpenAPI documentation is available at `http://localhost:8000/docs`.
