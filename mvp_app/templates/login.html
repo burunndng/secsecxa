@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Toolkit Login</title>
+    <style>
+        body {
+            background: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+        h1 {
+            text-align: center;
+            color: #58a6ff;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: center;
+            color: #8b949e;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-bottom: 6px;
+        }
+        input[type="password"],
+        input[type="text"] {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        input:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        button {
+            background: #238636;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #2ea043;
+        }
+        .flash {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            background: #3a1a1a;
+            border-left: 4px solid #da3633;
+            color: #ff7b72;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔒 Auth Required</h1>
+        <p>Enter the shared bearer token to access the toolkit.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="post">
+            <label for="token">Bearer Token</label>
+            <input id="token" name="token" type="password" placeholder="Enter token" autocomplete="off" required>
+            <button type="submit">Authenticate</button>
+        </form>
+    </div>
+</body>
+</html>

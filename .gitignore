@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+logs/
+uploads/
+toolkit/_uploads/
+.vscode/
+.idea/
+.DS_Store
+*.log
+.mypy_cache/
+.pytest_cache/
+venv/
+*.swp
+*.swo
