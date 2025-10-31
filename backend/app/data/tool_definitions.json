@@ -1,0 +1,107 @@
+{
+  "tools": [
+    {
+      "id": "port_scanner",
+      "name": "Port Scanner",
+      "description": "Scan TCP ports on target hosts",
+      "category": "network",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Hostname or IP address"
+          },
+          "ports": {
+            "type": "string",
+            "description": "Port or range (e.g., '80' or '1-1000')",
+            "default": "1-1000"
+          },
+          "timeout": {
+            "type": "integer",
+            "description": "Connection timeout in seconds",
+            "default": 1
+          }
+        },
+        "required": ["target"]
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "open_ports": {
+            "type": "array",
+            "items": {"type": "integer"}
+          }
+        }
+      },
+      "default_values": {
+        "ports": "1-1000",
+        "timeout": 1
+      },
+      "enabled": true,
+      "requires_elevated_privileges": false
+    },
+    {
+      "id": "dns_lookup",
+      "name": "DNS Lookup",
+      "description": "Query DNS records for a domain",
+      "category": "network",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name"
+          },
+          "record_types": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Record types (A, AAAA, MX, NS, TXT, etc.)",
+            "default": ["A", "AAAA"]
+          }
+        },
+        "required": ["domain"]
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "object"
+          }
+        }
+      },
+      "default_values": {
+        "record_types": ["A", "AAAA"]
+      },
+      "enabled": true,
+      "requires_elevated_privileges": false
+    },
+    {
+      "id": "whois_lookup",
+      "name": "WHOIS Lookup",
+      "description": "Retrieve domain registration information",
+      "category": "network",
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name"
+          }
+        },
+        "required": ["domain"]
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "whois_data": {
+            "type": "string"
+          }
+        }
+      },
+      "default_values": {},
+      "enabled": true,
+      "requires_elevated_privileges": false
+    }
+  ]
+}
