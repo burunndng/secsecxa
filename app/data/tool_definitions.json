@@ -1,0 +1,271 @@
+{
+  "tools": [
+    {
+      "id": "port_scanner",
+      "name": "Port Scanner",
+      "description": "Scan TCP ports on a target host to identify open services",
+      "category": "network",
+      "runner_class": "PortScannerRunner",
+      "enabled": true,
+      "requires_elevated_privileges": false,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "title": "Target Host",
+            "description": "Hostname or IP address to scan",
+            "pattern": "^[a-zA-Z0-9.-]+$"
+          },
+          "ports": {
+            "type": "string",
+            "title": "Port Range",
+            "description": "Port or port range to scan (e.g., 80 or 1-1000)",
+            "default": "1-1000"
+          },
+          "timeout": {
+            "type": "number",
+            "title": "Timeout (seconds)",
+            "description": "Connection timeout for each port",
+            "default": 1,
+            "minimum": 0.1,
+            "maximum": 10
+          }
+        },
+        "required": ["target"]
+      },
+      "default_values": {
+        "ports": "1-1000",
+        "timeout": 1
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "target": {"type": "string"},
+          "ip": {"type": "string"},
+          "ports_scanned": {"type": "integer"},
+          "open_ports_count": {"type": "integer"},
+          "open_ports": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "port": {"type": "integer"},
+                "state": {"type": "string"},
+                "service": {"type": "string"}
+              }
+            }
+          },
+          "scan_type": {"type": "string"}
+        }
+      }
+    },
+    {
+      "id": "dns_lookup",
+      "name": "DNS Lookup",
+      "description": "Query DNS records for a domain",
+      "category": "network",
+      "runner_class": "DNSLookupRunner",
+      "enabled": true,
+      "requires_elevated_privileges": false,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "title": "Domain Name",
+            "description": "Domain name to query",
+            "pattern": "^[a-zA-Z0-9.-]+$"
+          },
+          "record_types": {
+            "type": "array",
+            "title": "Record Types",
+            "description": "DNS record types to query",
+            "items": {
+              "type": "string",
+              "enum": ["A", "AAAA", "MX", "NS", "TXT", "CNAME", "SOA", "PTR", "SRV"]
+            },
+            "default": ["A", "AAAA", "MX", "NS", "TXT", "CNAME"]
+          }
+        },
+        "required": ["domain"]
+      },
+      "default_values": {
+        "record_types": ["A", "AAAA", "MX", "NS", "TXT", "CNAME"]
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {"type": "string"},
+          "records": {"type": "object"},
+          "total_record_types": {"type": "integer"}
+        }
+      }
+    },
+    {
+      "id": "whois_lookup",
+      "name": "WHOIS Lookup",
+      "description": "Retrieve WHOIS registration information for a domain",
+      "category": "network",
+      "runner_class": "WhoisLookupRunner",
+      "enabled": true,
+      "requires_elevated_privileges": false,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "title": "Domain Name",
+            "description": "Domain name to query",
+            "pattern": "^[a-zA-Z0-9.-]+$"
+          }
+        },
+        "required": ["domain"]
+      },
+      "default_values": {},
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {"type": "string"},
+          "registrar": {"type": "string"},
+          "creation_date": {"type": "string"},
+          "expiration_date": {"type": "string"},
+          "updated_date": {"type": "string"},
+          "status": {"type": ["array", "string"]},
+          "name_servers": {"type": "array"},
+          "emails": {"type": "array"},
+          "org": {"type": "string"},
+          "country": {"type": "string"}
+        }
+      }
+    },
+    {
+      "id": "ping",
+      "name": "Ping",
+      "description": "Send ICMP echo requests to test host reachability and measure latency",
+      "category": "network",
+      "runner_class": "PingRunner",
+      "enabled": true,
+      "requires_elevated_privileges": false,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "title": "Target Host",
+            "description": "Hostname or IP address to ping",
+            "pattern": "^[a-zA-Z0-9.-]+$"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Packet Count",
+            "description": "Number of ping packets to send",
+            "default": 4,
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": ["target"]
+      },
+      "default_values": {
+        "count": 4
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "target": {"type": "string"},
+          "packets_sent": {"type": "integer"},
+          "packets_received": {"type": "integer"},
+          "packet_loss_percent": {"type": "number"},
+          "min_rtt_ms": {"type": "number"},
+          "avg_rtt_ms": {"type": "number"},
+          "max_rtt_ms": {"type": "number"},
+          "packets": {"type": "array"}
+        }
+      }
+    },
+    {
+      "id": "ssl_analyzer",
+      "name": "SSL/TLS Certificate Analyzer",
+      "description": "Analyze SSL/TLS certificates and connection security",
+      "category": "network",
+      "runner_class": "SSLAnalyzerRunner",
+      "enabled": true,
+      "requires_elevated_privileges": false,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "hostname": {
+            "type": "string",
+            "title": "Hostname",
+            "description": "Hostname to analyze",
+            "pattern": "^[a-zA-Z0-9.-]+$"
+          },
+          "port": {
+            "type": "integer",
+            "title": "Port",
+            "description": "SSL/TLS port number",
+            "default": 443,
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        "required": ["hostname"]
+      },
+      "default_values": {
+        "port": 443
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "hostname": {"type": "string"},
+          "port": {"type": "integer"},
+          "version": {"type": "string"},
+          "cipher": {"type": "array"},
+          "certificate": {"type": "object"}
+        }
+      }
+    },
+    {
+      "id": "traceroute",
+      "name": "Traceroute",
+      "description": "Trace the network path to a destination host",
+      "category": "network",
+      "runner_class": "TracerouteRunner",
+      "enabled": true,
+      "requires_elevated_privileges": false,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "title": "Target Host",
+            "description": "Hostname or IP address to trace",
+            "pattern": "^[a-zA-Z0-9.-]+$"
+          },
+          "max_hops": {
+            "type": "integer",
+            "title": "Max Hops",
+            "description": "Maximum number of hops",
+            "default": 30,
+            "minimum": 1,
+            "maximum": 64
+          }
+        },
+        "required": ["target"]
+      },
+      "default_values": {
+        "max_hops": 30
+      },
+      "result_schema": {
+        "type": "object",
+        "properties": {
+          "target": {"type": "string"},
+          "max_hops": {"type": "integer"},
+          "hops_count": {"type": "integer"},
+          "hops": {"type": "array"}
+        }
+      }
+    }
+  ]
+}
