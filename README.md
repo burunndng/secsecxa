@@ -1,6 +1,4 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Cybersecurity Toolkit MVP Web Wrapper
 
 # CyberSec Toolkit
 
@@ -8,7 +6,18 @@ Advanced tools for encryption, analysis, cognitive simulation, and **network rec
 
 This project combines a React frontend for cognitive tools with a powerful Python backend for network and security toolkit utilities.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1RORZOJGwPK_TPEgXkSjpnwYpMoqOVHYz
+- **Tool Discovery**: Automatically scans `toolkit/` directory for executables and scripts (.py, .sh, .js, etc.)
+- **Simple Web UI**: Lists all discovered tools with minimal forms to run them (arguments + optional file upload)
+- **Safe Execution**: 
+  - Confined to `toolkit/` directory (no path traversal)
+  - 120-second timeout per execution
+  - Output size limits
+  - Sanitized arguments (blocks dangerous shell characters and absolute paths)
+- **Output Display**: Shows stdout/stderr on the page after execution
+- **Download Support**: Download raw stdout as .txt file
+- **Optional Authentication**: Bearer token auth via environment variable (with simple login screen)
+- **Logging**: Rotating log files under `logs/` directory
+- **REST API**: JSON endpoints for programmatic access
 
 ## 🚀 Quick Start
 
